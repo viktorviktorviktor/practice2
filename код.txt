@@ -1,0 +1,43 @@
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    else:
+        pivot = arr[0]
+        less = [x for x in arr[1:] if x <= pivot]
+        greater = [x for x in arr[1:] if x > pivot]
+        return quick_sort(less) + [pivot] + quick_sort(greater)
+
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    mid = len(arr) // 2
+    left_half = arr[:mid]
+    right_half = arr[mid:]
+    
+    left_half = merge_sort(left_half)
+    right_half = merge_sort(right_half)
+    
+    return merge(left_half, right_half)
+
+def merge(left, right):
+    result = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    
+    result += left[i:]
+    result += right[j:]
+    
+    return result
+
+arr = [5, 3, 8, 6, 2, 7, 1, 4]
+
+print("Исходный массив:", arr)
+print("Отсортированный массив с помощью быстрой сортировки:", quick_sort(arr.copy()))
+print("Отсортированный массив с помощью сортировки слиянием:", merge_sort(arr.copy()))
